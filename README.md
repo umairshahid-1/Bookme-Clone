@@ -1,5 +1,6 @@
 # Bookme-Clone
-Midterm Project for SE subject. 
+Midterm Project for SE subject.
+
 Functional Requirements:
 1.	Registration and Authentication: 
 o	Users should be able to create profiles by providing essential information, such as name, email address, and password.
