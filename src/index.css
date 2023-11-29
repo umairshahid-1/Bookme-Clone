@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .sections {
+    @apply py-[75px];
+  }
+}
+
+.gradient {
+  background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+}
+
+.header__container .section__header {
+  color: #0f172a;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 4rem;
+}
+
+.header__containerimg {
+  height: 700px;
+  width: 1400px; /* Adjust the value according to your preference */
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-link {
+  font-family: "Poppins", sans-serif;
+  text-decoration: none; /* Optional: remove underline from links */
+}
+.header-link.active {
+  /* Optional: Add styles for active links */
+  font-weight: bold;
+  /* Add any other styles you want for active links */
+}
+
+.section__container {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 5rem 1rem;
+}
+
+.section__header {
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 3rem;
+  color: var(--text-dark);
+}
+
+.square-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover; /* Optional: maintain aspect ratio */
+}
+
+.about_img {
+  width: 600px;
+  height: 500px;
+  margin-left: 40px;
+  object-fit: cover;
+}
+
+.bus_img {
+  width: 600px;
+  height: 500px;
+  object-fit: cover;
+}
+
+.faq_img {
+  width: 800px;
+  height: 800px;
+  margin-left: 40px;
+  object-fit: cover;
+}
+
+.btn {
+  display: inline-block;
+  text-decoration: none;
+  padding: 14px 35px; 
+  color: #423636;
+  background: linear-gradient(45deg, #3d5cb8, #01b5c5);
+  font-size: 14px;
+  border-radius: 30px;
+  border-top-right-radius: 0;
+  transition: 0.5s;
+  line-height: 1; /* Vertically center the text */
+}
+
+.btn:hover {
+  border-top-right-radius: 30px;
+}
+
+@layer components {
+  .container {
+    @apply max-w-full w-[1440px] px-5 mx-auto;
+  }
+
+  .heading {
+    @apply text-[44px] leading-[54px] font-[700] text-headingColor;
+  }
+
+  .text__para {
+    @apply text-[18px] leading-[30px] font-[500];
+    color: #4e545f;
+  }
+
+  .header {
+    @apply bg-no-repeat bg-center
+        bg-cover w-full h-[100px] leading-[100px];
+  }
+
+  .hero__section {
+    @apply bg-[url('./assets/images/hero-bg.png')] bg-no-repeat bg-center
+        bg-cover;
+  }
+
+  .form__label {
+    @apply text-textColor font-semibold text-[16px] mb-2 leading-7;
+  }
+
+  .form__input {
+    @apply w-full px-4 py-3 border border-solid border-[#0066ff61]
+        focus:outline-none focus:border-primaryColor text-[16px] leading-7 text-headingColor
+        placeholder:text-textColor cursor-pointer rounded-md;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .container {
+    @apply w-full;
+  }
+
+  section {
+    @apply py-[35px];
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .heading {
+    @apply text-[26px] leading-[36px];
+  }
+
+  .text__para {
+    @apply text-[16px] leading-7 mt-3;
+  }
+}
