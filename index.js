@@ -32,7 +32,7 @@ const connectDB = async () => {
   }
 }
 
-// Middleware
+// Middleware part
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
