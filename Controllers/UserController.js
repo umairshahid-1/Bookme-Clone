@@ -51,18 +51,6 @@ export const SignUp = async (req, res) => {
   }
 };
 
-/*{
-    "name": "admin",
-    "email": "admin@gmail.com",
-    "password": "admin123",
-    "role": "user",
-    "gender": "male",
-    "CNIC": "122129034344",
-    "phone": "+1234567390"
-}
-
-*/
-
 
 export const Login = async (req, res) => {
 
