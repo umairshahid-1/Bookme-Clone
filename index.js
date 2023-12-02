@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoute from "./Routes/User.js"
 import busRoute from "./Routes/Bus.js"
+import reviewRoute from "./Routes/Review.js"
 
 dotenv.config();
 
@@ -39,6 +40,8 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use('/api/v1/User', userRoute)
 app.use('/api/v1/Bus', busRoute)
+app.use('/api/v1/Review', reviewRoute)
+
 
 // Start the server
 app.listen(port, () => {

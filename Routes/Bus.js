@@ -6,9 +6,11 @@ import {
   getAllBus,
   getSingleBus,
 } from "../Controllers/BusController.js";
-
+import reviewRouter from "./Review.js"
 
 const router = express.Router();
+
+router.use("/busID/reviews", reviewRouter)
 
 router.post("/addnewbus", addNewBus);
 router.get("/:id", getSingleBus);
