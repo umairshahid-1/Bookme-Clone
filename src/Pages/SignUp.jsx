@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
 import { Link } from "react-router-dom";
 import avatar from "../assets/images/doctor-img01.png";
-import Login from "./";
+import Login from "./Login";
 
 const SignUp = () => {
   const [selectedFile, setselectedFile] = useState(null);
@@ -24,15 +24,18 @@ const SignUp = () => {
     });
   };
 
-  const handleFileInputChange = async (event) => {
-    const file = event.target.files[0];
+  const handleFileInputChange = async (event) =>
+  {
+    const file = event.target.files[0]
 
-    console.log(file);
-  };
+    console.log(file)
+  }
 
-  const submitHandler = async (event) => {
-    event.preventDefault();
-  };
+  const submitHandler = async event => {
+    event.preventDefault()
+  }
+
+  
 
   return (
     <section className="px-5 xl:px-0">
@@ -148,7 +151,10 @@ const SignUp = () => {
               </div>
               <p className="mt-5 text-textColor text-center">
                 Already have an account?
-                <Link to="/" className="text-primaryColor font-medium ml-1">
+                <Link
+                  to="/login"
+                  className="text-primaryColor font-medium ml-1"
+                >
                   Login
                 </Link>
               </p>
