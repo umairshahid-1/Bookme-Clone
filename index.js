@@ -4,7 +4,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import userRoute from "./Routes/User.js"
-import customerRoute from "./Routes/Customer.js"
+import busRoute from "./Routes/Bus.js"
 
 dotenv.config();
 
@@ -38,7 +38,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
 app.use('/api/v1/User', userRoute)
-app.use('/api/v1/customers', customerRoute)
+app.use('/api/v1/Bus', busRoute)
 
 // Start the server
 app.listen(port, () => {

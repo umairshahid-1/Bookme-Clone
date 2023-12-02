@@ -17,8 +17,6 @@ const UserSchema = new mongoose.Schema(
     gender: { type: String, enum: ["male", "female", "other"] },
     CNIC: { type: String },
     BookingsHistory: [{ type: mongoose.Types.ObjectId, ref: "Appointment" }],
-    createdOn: { type: Date, default: Date.now },
-    updatedOn: { type: Date, default: Date.now },
   },
   { timestamps: true } // Enables timestamps (createdOn and updatedOn) automatically
 );
