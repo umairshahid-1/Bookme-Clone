@@ -2,40 +2,58 @@ import React, { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
 import { Link } from "react-router-dom";
 import avatar from "../assets/images/doctor-img01.png";
-import Login from "./Login";
 
 const SignUp = () => {
-  const [selectedFile, setselectedFile] = useState(null);
-  const [previewURL, setPreviewURL] = useState("");
 
-  const [formData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    photo: "",
-    gender: "",
-    role: "patient",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [CNIC, setCNIC] = useState("");
+  const [gender, setGender] = useState("");
+  const [role, setRole] = useState("user");
 
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    // Use separate state setters for each field
+    switch (name) {
+      case "name":
+        setName(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "phone":
+        setPhone(value);
+        break;
+      case "CNIC":
+        setCNIC(value);
+        break;
+      case "gender":
+        setGender(value);
+        break;
+      case "role":
+        setRole(value);
+        break;
+      default:
+        break;
+    }
   };
 
-  const handleFileInputChange = async (event) =>
-  {
-    const file = event.target.files[0]
+  const handleFileInputChange = async (event) => {
+    console.log(formData);
+    const file = event.target.files[0];
 
-    console.log(file)
-  }
+    console.log(file);
+  };
 
-  const submitHandler = async event => {
-    event.preventDefault()
-  }
-
-  
+  const submitHandler = async (event) => {
+    event.preventDefault();
+  };
 
   return (
     <section className="px-5 xl:px-0">
@@ -52,15 +70,16 @@ const SignUp = () => {
             <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
               Create an <span className="text-primaryColor">account</span>
             </h3>
+
             <form onSubmit={submitHandler}>
               <div className="mb-5">
                 <input
                   type="text"
                   placeholder="Full Name"
                   name="name"
-                  value={formData.name}
+                  value={name}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  "
                   required
                 />
               </div>
@@ -70,7 +89,7 @@ const SignUp = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  value={formData.email}
+                  value={email}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -82,7 +101,31 @@ const SignUp = () => {
                   type="password"
                   placeholder="Password"
                   name="password"
-                  value={formData.password}
+                  value={password}
+                  onChange={handleInputChange}
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+                  required
+                />
+              </div>
+
+              <div className="mb-5">
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  name="phone"
+                  value={phone}
+                  onChange={handleInputChange}
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
+                  required
+                />
+              </div>
+
+              <div className="mb-5">
+                <input
+                  type="text"
+                  placeholder="CNIC Number"
+                  name="CNIC"
+                  value={CNIC}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -94,12 +137,12 @@ const SignUp = () => {
                   Are you a:
                   <select
                     name="role"
-                    value={formData.role}
+                    value={role}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value="patient">Patient</option>
-                    <option value="doctor">Doctor</option>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
                   </select>
                 </label>
 
@@ -107,14 +150,14 @@ const SignUp = () => {
                   Gender
                   <select
                     name="gender"
-                    value={formData.gender}
+                    value={gender}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
                     <option value="">Select</option>
                     <option value="male">Male</option>
-                    <option value="female">FeMale</option>
-                    <option value="Others">Others</option>
+                    <option value="female">Female</option>
+                    <option value="others">Others</option>
                   </select>
                 </label>
               </div>
