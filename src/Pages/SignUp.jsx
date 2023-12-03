@@ -1,59 +1,76 @@
 import React, { useState } from "react";
 import signupImg from "../assets/images/signup.gif";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import avatar from "../assets/images/doctor-img01.png";
+import uploadImageToCloudinary from "../utils/uploadCloudinary";
+import {BASE_URL} from "../config.js";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
+  const [selectedFile, setselectedFile] = useState(null);
+  const [previewURL, setPreviewURL] = useState("");
+  const [loading, setLoading] = useState(false)
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [CNIC, setCNIC] = useState("");
-  const [gender, setGender] = useState("");
-  const [role, setRole] = useState("user");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    photo: "",
+    phone: "",
+    CNIC: "",
+    gender: "",
+    role: "",
+  });
+
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    // Use separate state setters for each field
-    switch (name) {
-      case "name":
-        setName(value);
-        break;
-      case "email":
-        setEmail(value);
-        break;
-      case "password":
-        setPassword(value);
-        break;
-      case "phone":
-        setPhone(value);
-        break;
-      case "CNIC":
-        setCNIC(value);
-        break;
-      case "gender":
-        setGender(value);
-        break;
-      case "role":
-        setRole(value);
-        break;
-      default:
-        break;
-    }
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleFileInputChange = async (event) => {
-    console.log(formData);
-    const file = event.target.files[0];
+  const handleFileInputChange = async event =>
+  {
+    const file = event.target.files[0]; 
+    const data = await uploadImageToCloudinary(file);
+   setPreviewURL(data.url)
+   setselectedFile(data.url)
+   setFormData({...formData, photo:data.url})
+  }
 
-    console.log(file);
-  };
+  const submitHandler = async event => {
 
-  const submitHandler = async (event) => {
     event.preventDefault();
-  };
+    setLoading(true)
+
+    try {
+      const res = await fetch(`${BASE_URL}/User/SignUp`, {
+        method: 'post',
+        headers: {
+          'Content-Type' : 'application/json'
+        },
+      body:JSON.stringify(formData)
+    })
+      const {message} = await res.json()
+
+      if(!res.ok)
+      {
+        throw new Error(message)
+      }
+
+      setLoading(false)
+      toast.success(message)
+      navigate('/login')
+    
+    } catch (err) {
+      toast.error(err.message)
+      setLoading(false) 
+    }
+  }
+
+  
 
   return (
     <section className="px-5 xl:px-0">
@@ -70,16 +87,15 @@ const SignUp = () => {
             <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
               Create an <span className="text-primaryColor">account</span>
             </h3>
-
             <form onSubmit={submitHandler}>
               <div className="mb-5">
                 <input
                   type="text"
                   placeholder="Full Name"
                   name="name"
-                  value={name}
+                  value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  "
+                  className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
                 />
               </div>
@@ -89,7 +105,7 @@ const SignUp = () => {
                   type="email"
                   placeholder="Email"
                   name="email"
-                  value={email}
+                  value={formData.email}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -101,7 +117,7 @@ const SignUp = () => {
                   type="password"
                   placeholder="Password"
                   name="password"
-                  value={password}
+                  value={formData.password}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -113,7 +129,7 @@ const SignUp = () => {
                   type="text"
                   placeholder="Phone Number"
                   name="phone"
-                  value={phone}
+                  value={formData.phone}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -125,7 +141,7 @@ const SignUp = () => {
                   type="text"
                   placeholder="CNIC Number"
                   name="CNIC"
-                  value={CNIC}
+                  value={formData.CNIC}
                   onChange={handleInputChange}
                   className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor  cursor-pointer"
                   required
@@ -137,11 +153,12 @@ const SignUp = () => {
                   Are you a:
                   <select
                     name="role"
-                    value={role}
+                    value={formData.role}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value="user">User</option>
+                    <option value="">Select</option>
+                  <option value="user">User</option>
                     <option value="admin">Admin</option>
                   </select>
                 </label>
@@ -150,7 +167,7 @@ const SignUp = () => {
                   Gender
                   <select
                     name="gender"
-                    value={gender}
+                    value={formData.gender}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
@@ -163,9 +180,9 @@ const SignUp = () => {
               </div>
 
               <div className="mb-5 flex items-center gap-3">
-                <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
-                  <img src={avatar} alt="" className="w-full rounded-full" />
-                </figure>
+                 { selectedFile && <figure className="w-[60px] h-[60px] rounded-full border-2 border-solid border-primaryColor flex items-center justify-center">
+                  <img src={previewURL} alt="" className="w-full rounded-full" />
+                </figure>}
                 <div className="relative w-[130px] h-[50px]">
                   <input
                     type="file"
